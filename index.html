@@ -45,7 +45,95 @@
 
 
   <!-- JavaScript at the bottom for fast page loading -->
+    <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
+    <script>
+      //****************************
+      //******* COMMON LOGIC *******
+      //****************************
+        // Create bubble post object
+  	    function bubblePost(bubbleid, category, title, idea, userid, upvotes, downvotes, isroot, rootbubbleid) {
+	     this.bubbleId = bubbleid;
+	     this.category = category;
+	     this.title = title;
+	     this.idea = idea;
+	     this.userId = userid;
+	     this.upVotes = upvotes;
+	     this.downVotes = downvotes;
+	     this.isRoot = isroot;
+	     this.rootBubbleId = rootbubbleid;
+	     }
+ 
+  	    // Create firebase bubble reference
+	    var messagesRef = new Firebase("https://xbubble.firebaseio.com/bubbles");
+	
+      //**************************
+      //******* READ LOGIC *******
+      //**************************
+	    // REGISTER DOM ELEMENTS
+  	    var messageList = $('#bubble-posts');
+	
+	    // Get posts from firebase and listen for changes
+	    messagesRef.limitToLast(10).on('child_added', function (snapshot) {
+		
+        //GET DATA
+        var data = snapshot.val();
+        var category = data.category;
+        var bubbleTitle = data.title;
+        var bubbleIdea = data.idea;
+        var username = data.user_id || "anonymous";
+        var upVotes = data.up_votes;
+        var downVotes = data.down_votes;
+        var isRoot = data.is_root;
+        var bubbleId = "123abc";
+    
+        var newBubblePost = new bubblePost(bubbleId, category, bubbleTitle, bubbleIdea, username, upVotes, downVotes, isRoot, null);
+    
+        //POST BUBBLE
+        var messageElement = $("<li>");
+        messageElement.text(newBubblePost.idea).prepend(newBubblePost.userId + ": ");
+
+        //ADD MESSAGE
+        messageList.append(messageElement);
+
+        //SCROLL TO BOTTOM OF MESSAGE LIST
+        messageList[0].scrollTop = messageList[0].scrollHeight;
+      });
+  
+      //***************************
+      //******* WRITE LOGIC *******
+      //***************************
+  
+      // REGISTER DOM ELEMENTS
+  
+      var categoryField = $('#entry-category');
+      var titleField = $('#entry-title');
+      var ideaField = $('#entry-idea');
+
+      // LISTEN FOR KEYPRESS EVENT
+      ideaField.keypress(function (e) {
+        if (e.keyCode == 13) {
+          //FIELD VALUES
+          var category = categoryField.val();
+          var title = titleField.val();
+          var idea = ideaField.val();
+          var upVotes = 1;
+          var downVotes = 0;
+          var userId = 'joliver81';
+          var isRoot = 1;
+      
+          window.alert(title);
+
+          //SAVE DATA TO FIREBASE AND EMPTY FIELD
+          messagesRef.push({category:category, title:title, idea:idea, up_vote:upVotes, down_vote:downVotes, user_id:userId, is_root:isRoot});
+          categoryField.val('');
+          titleField.val('');
+          ideaField.val('');
+        }
+      });
+
+    </script>
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
