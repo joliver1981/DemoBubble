@@ -35,23 +35,55 @@
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <header>
       <link rel="stylesheet" href="css/bubblestyle.css">
+
+        <script>
+            //document.createElement('article');
+            //document.createElement('section');
+            //document.createElement('aside');
+            //document.createElement('hgroup');
+            //document.createElement('nav');
+            //document.createElement('header');
+            //document.createElement('footer');
+            //document.createElement('figure');
+            //document.createElement('figcaption');
+        </script>
   </header>
-  <div role="main">
+  <div role="main" id="wrapper">
+      <div class="menuBar">
+          <div class="nav">
+              <nav>
+                  <ul>
+                      <li class="twitterStyleButton"><a href="index.html">Home</a></li>
+                      <li class="twitterStyleButton"><a href="signup.html">Signup</a></li>
+                  </ul>
+              </nav>
+           </div>
+      </div>
+
         <p>Welcome to Bubble!</p>
-    	<ul id="bubble-posts"></ul>
+
+      <div id="content">
+          <ul id="bubble-posts"></ul>
+      </div>
+
+      <div id="rightSidebar">
+        <section>
+            <form id="bubble-post-entry" action="">
+    		    <label>Category:</label>
+    		    <input id="entry-category" class="categoryText"  />
+    		    <br/>
+    		    <label>Title:</label>
+    		    <input id="entry-title"  />
+    		    <br/>
+    		    <label>Message:</label>
+    		    <textarea id="entry-idea"  rows="4" cols="50"></textarea>
+    		    <br/>
+                <p id="button-text" class="twitterStyleButton"><B>SEND BUBBLE!</B></p>
+    	    </form>
+        </section>
+      </div>
     	
-    	<form id="bubble-post-entry">
-    		<label>Category:</label>
-    		<input id="entry-category" class="categoryText" />
-    		<br/>
-    		<label>Title:</label>
-    		<input id="entry-title" />
-    		<br/>
-    		<label>Idea:</label>
-    		<input id="entry-idea" />
-    		<br/>
-            <p id="button-text" class="twitterStyleButton"><B>SEND BUBBLE!</B></p>
-    	</form>
+
   </div>
   <footer>
 
